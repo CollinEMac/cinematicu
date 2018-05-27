@@ -1,0 +1,8 @@
+.Callout {
+  background-color: #35825B;
+  border: 5px solid green;
+  width: 20%;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+}

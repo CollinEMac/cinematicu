@@ -1,0 +1,8 @@
+.Poster {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  height: 250px;
+  border: 10px solid green; /* Flex this based on relationships? */
+  border-radius: 50%;
+}
