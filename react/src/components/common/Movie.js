@@ -67,7 +67,7 @@ import './Callout.css';
 
       return (
         <div>
-          <img className="Poster" src={img_url} alt=""
+          <img id={img_url} className="Poster" src={img_url} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
           />

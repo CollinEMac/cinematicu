@@ -26,7 +26,6 @@ import './Header.css';
         .then(handleResponse)
         .then((data) => {
         this.setState({
-            // movies: data,
             movies: data.movies,
             universe_title: data.universe_title,
             loading: false,
@@ -40,6 +39,22 @@ import './Header.css';
             loading: false,
           });
         });
+
+        this.drawCanvas();
+    }
+
+    drawCanvas() {
+      window.onload = function() {
+        var universeCanvas = document.getElementById('universeCanvas');
+
+        var context = universeCanvas.getContext('2d');
+        var images = document.getElementsByTagName("img");
+
+        for (var i=0, max=images.length; i < max; i++) {
+          context.drawImage(images[i], 69, 50);
+          // Do something with the element here
+        }
+      }
     }
 
     render() {
@@ -58,6 +73,8 @@ import './Header.css';
       return (
         <div>
           <Header title={universe_title}/>
+
+          <canvas id="universeCanvas" width="2000" height="2000"></canvas>
 
           <div>
               {movies.map((movie, i) => <Movie movie_id={movie.id} key={i}/>)}
