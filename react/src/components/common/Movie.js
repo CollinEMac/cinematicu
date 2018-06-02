@@ -39,7 +39,7 @@ import './Callout.css';
     }
 
     render() {
-      const { loading, error, movie } = this.state;
+      const { loading, error, movie, } = this.state;
 
       // render only loading component, if loading state is set to true
       if (loading) {
@@ -51,7 +51,17 @@ import './Callout.css';
         return <div className="error">{error}</div>
       }
 
-      var img_url = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`
+      var imgUrl = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`
+
+      //TODO: 250 isn't exactly right, I should really grab the
+      //image and actually look at its real width
+
+      var moviesPerRow = window.innerWidth/250
+
+      var mod = this.props.sequence % moviesPerRow
+      var imageLeft = 250 * mod
+
+      var imageTop = 90 + (250*(this.props.sequence/moviesPerRow))
 
       function hover(e) {
         var callout = document.getElementById(movie.id);
@@ -67,9 +77,10 @@ import './Callout.css';
 
       return (
         <div>
-          <img id={img_url} className="Poster" src={img_url} alt=""
+          <img className="Poster" src={imgUrl} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
+            style={{top:imageTop, left:imageLeft}}
           />
 
           <div id={movie.id} className="Callout">

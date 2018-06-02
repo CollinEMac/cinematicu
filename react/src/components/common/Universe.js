@@ -40,9 +40,12 @@ import './Header.css';
           });
         });
 
-        this.drawCanvas();
+        // this.drawCanvas();
+        // this.sortImages();
+
     }
 
+    // Maybe I won't use a canvas? even though I spent forever figuring this out...
     drawCanvas() {
       window.onload = function() {
         var universeCanvas = document.getElementById('universeCanvas');
@@ -53,6 +56,20 @@ import './Header.css';
         for (var i=0, max=images.length; i < max; i++) {
           context.drawImage(images[i], 69, 50);
           // Do something with the element here
+        }
+      }
+    }
+
+    sortImages(){
+      window.onload = function() {
+        var images = document.getElementsByTagName("img");
+
+        console.log('hello?');
+        console.log(images)
+
+        for (var i=0, max=images.length; i < max; i++) {
+          images[i].style.top = images[i].id * images[i].height;
+          console.log(images[i].id)
         }
       }
     }
@@ -74,10 +91,10 @@ import './Header.css';
         <div>
           <Header title={universe_title}/>
 
-          <canvas id="universeCanvas" width="2000" height="2000"></canvas>
+          {/* <canvas id="universeCanvas" width="2000" height="2000"></canvas> */}
 
           <div>
-              {movies.map((movie, i) => <Movie movie_id={movie.id} key={i}/>)}
+              {movies.map((movie, i) => <Movie movie_id={movie.id} key={i} sequence={i}/>)}
           </div>
         </div>
       );
