@@ -36,6 +36,11 @@ import './Callout.css';
             loading: false,
           });
         });
+
+        // var div = document.getElementById('dragdiv');
+        // div.addEventListener('onDragStart',this.onDragStart,false);
+        // document.body.addEventListener('onDragOver',this.onDragOver,false);
+        // document.body.addEventListener('onDrop',this.onDrop,false);
     }
 
     render() {
@@ -53,15 +58,16 @@ import './Callout.css';
 
       var imgUrl = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`
 
-      //TODO: 250 isn't exactly right, I should really grab the
-      //image and actually look at its real width
+      // just using constants for now, images shoudl be about the same size forever
+      const imageWidth = 177;
+      const imageHeight = 260;
 
-      var moviesPerRow = window.innerWidth/250
+      var moviesPerRow = Math.floor(window.innerWidth/imageWidth)
 
       var mod = this.props.sequence % moviesPerRow
-      var imageLeft = 250 * mod
+      var imageLeft = (imageWidth * mod)
 
-      var imageTop = 90 + (250*(this.props.sequence/moviesPerRow))
+      var imageTop = 90 + (imageHeight*(Math.floor(this.props.sequence/moviesPerRow)))
 
       function hover(e) {
         var callout = document.getElementById(movie.id);
@@ -75,8 +81,31 @@ import './Callout.css';
         callout.style.visibility = "hidden";
       }
 
+      function onDragStart(e){
+        console.log('On Drag Start')
+        var style = window.getComputedStyle(e.target, null);
+        e.dataTransfer.setData("text/plain",
+        (parseInt(style.getPropertyValue("left"),10) - e.clientX) + ',' + (parseInt(style.getPropertyValue("top"),10) - e.clientY));
+      }
+
+      function onDragOver(e) {
+        console.log('On Drag Over')
+        e.preventDefault();
+        return false;
+      }
+
+      function onDrop(e) {
+        console.log('On Drop')
+        var offset = e.dataTransfer.getData("text/plain").split(',');
+        var div = document.getElementById('dragdiv');
+        div.style.left = (e.clientX + parseInt(offset[0],10)) + 'px';
+        div.style.top = (e.clientY + parseInt(offset[1],10)) + 'px';
+        e.preventDefault();
+        return false;
+      }
+
       return (
-        <div>
+          <div id="dragdiv" draggable="true" onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}>
           <img className="Poster" src={imgUrl} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
