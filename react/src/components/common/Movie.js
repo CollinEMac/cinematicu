@@ -97,7 +97,7 @@ import './Callout.css';
       function onDrop(e) {
         console.log('On Drop')
         var offset = e.dataTransfer.getData("text/plain").split(',');
-        var div = document.getElementById('dragdiv');
+        var div = document.getElementById(imgUrl)
         div.style.left = (e.clientX + parseInt(offset[0],10)) + 'px';
         div.style.top = (e.clientY + parseInt(offset[1],10)) + 'px';
         e.preventDefault();
@@ -105,7 +105,7 @@ import './Callout.css';
       }
 
       return (
-          <div id="dragdiv" draggable="true" onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}>
+          <div id={imgUrl} draggable="true" onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}>
           <img className="Poster" src={imgUrl} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
