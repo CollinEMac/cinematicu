@@ -7,6 +7,9 @@ import './Header.css';
 import './Poster.css';
 import './Callout.css';
 
+import Draggable from 'react-draggable'; //react-draggable api
+// https://www.npmjs.com/package/react-draggable
+
   class Movie extends React.Component {
     constructor() {
       super();
@@ -36,11 +39,6 @@ import './Callout.css';
             loading: false,
           });
         });
-
-        // var div = document.getElementById('dragdiv');
-        // div.addEventListener('onDragStart',this.onDragStart,false);
-        // document.body.addEventListener('onDragOver',this.onDragOver,false);
-        // document.body.addEventListener('onDrop',this.onDrop,false);
     }
 
     render() {
@@ -81,31 +79,9 @@ import './Callout.css';
         callout.style.visibility = "hidden";
       }
 
-      function onDragStart(e){
-        console.log('On Drag Start')
-        var style = window.getComputedStyle(e.target, null);
-        e.dataTransfer.setData("text/plain",
-        (parseInt(style.getPropertyValue("left"),10) - e.clientX) + ',' + (parseInt(style.getPropertyValue("top"),10) - e.clientY));
-      }
-
-      function onDragOver(e) {
-        console.log('On Drag Over')
-        e.preventDefault();
-        return false;
-      }
-
-      function onDrop(e) {
-        console.log('On Drop')
-        var offset = e.dataTransfer.getData("text/plain").split(',');
-        var div = document.getElementById(imgUrl)
-        div.style.left = (e.clientX + parseInt(offset[0],10)) + 'px';
-        div.style.top = (e.clientY + parseInt(offset[1],10)) + 'px';
-        e.preventDefault();
-        return false;
-      }
-
       return (
-          <div id={imgUrl} draggable="true" onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}>
+        <Draggable>
+          <div id={imgUrl}>
           <img className="Poster" src={imgUrl} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
@@ -118,6 +94,7 @@ import './Callout.css';
             <p>{movie.overview}</p>
           </div>
         </div>
+      </Draggable>
       );
     }
   }
