@@ -69,23 +69,29 @@ import Draggable from 'react-draggable'; //react-draggable api
 
       function hover(e) {
         var callout = document.getElementById(movie.id);
-        callout.style.left=e.pageX + "px";
-        callout.style.top=e.pageY + "px";
+        callout.style.left=e.clientX + "px";
+        callout.style.top=e.clientY + "px";
         callout.style.visibility="visible";
+
+        var poster = document.getElementById(imgUrl);
+        poster.style.height = 300 + "px";
       }
 
       function unHover(e) {
         var callout = document.getElementById(movie.id);
         callout.style.visibility = "hidden";
+
+        var poster = document.getElementById(imgUrl);
+        poster.style.height = 250 + "px";
       }
 
       return (
         <Draggable>
-          <div id={imgUrl}>
-          <img className="Poster" src={imgUrl} alt=""
+          <div>
+          <img className="Poster" id={imgUrl} src={imgUrl} alt=""
             onMouseEnter={hover}
             onMouseLeave={unHover}
-            style={{top:imageTop, left:imageLeft}}
+            style={{top:imageTop, left:imageLeft, zIndex:0, position:"absolute"}}
           />
 
           <div id={movie.id} className="Callout">
