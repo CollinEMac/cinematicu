@@ -2,6 +2,7 @@
   background-color: #81C784;
   border: 5px solid #1B5E20;
   width: 20%;
+  height: 100%;
   visibility: hidden;
   position: absolute;
   z-index: 1;

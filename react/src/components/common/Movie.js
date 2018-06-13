@@ -60,24 +60,22 @@ import Draggable from 'react-draggable'; //react-draggable api
       const imageWidth = 177;
       const imageHeight = 260;
 
-      var moviesPerRow = Math.floor(window.innerWidth/imageWidth)
+      var moviesPerRow = Math.floor((0.8 * window.innerWidth)/imageWidth)
 
       var mod = this.props.sequence % moviesPerRow
-      var imageLeft = (imageWidth * mod)
+      var imageLeft = (0.2 * window.innerWidth) + (imageWidth * mod)
 
       var imageTop = 90 + (imageHeight*(Math.floor(this.props.sequence/moviesPerRow)))
 
       function hover(e) {
         var callout = document.getElementById(movie.id);
-        callout.style.left=e.clientX + "px";
-        callout.style.top=e.clientY + "px";
         callout.style.visibility="visible";
 
         var poster = document.getElementById(imgUrl);
         poster.style.height = 300 + "px";
       }
 
-      function unHover(e) {
+      function unHover() {
         var callout = document.getElementById(movie.id);
         callout.style.visibility = "hidden";
 
@@ -86,13 +84,16 @@ import Draggable from 'react-draggable'; //react-draggable api
       }
 
       return (
-        <Draggable>
-          <div>
-          <img className="Poster" id={imgUrl} src={imgUrl} alt=""
-            onMouseEnter={hover}
-            onMouseLeave={unHover}
-            style={{top:imageTop, left:imageLeft, zIndex:0, position:"absolute"}}
-          />
+        <div>
+          <Draggable>
+            <div>
+              <img className="Poster" id={imgUrl} src={imgUrl} alt=""
+                onMouseEnter={hover}
+                onMouseLeave={unHover}
+                style={{top:imageTop, left:imageLeft}}
+              />
+            </div>
+          </Draggable>
 
           <div id={movie.id} className="Callout">
             <Header title={movie.title}/>
@@ -100,7 +101,6 @@ import Draggable from 'react-draggable'; //react-draggable api
             <p>{movie.overview}</p>
           </div>
         </div>
-      </Draggable>
       );
     }
   }
